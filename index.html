@@ -2,66 +2,198 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Quests – Solo Leveling Inspired</title>
-  <!-- Link to external CSS -->
-  <link rel="stylesheet" href="style.css" />
+  <title>Daily Quests - Solo Leveling</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .quest-container {
+      background-color: rgba(0, 0, 0, 0.4);
+      border: 2px solid #4ade80;
+      border-radius: 10px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .quest-container h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .quest-container h2 {
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 1.5rem;
+      color: #4ade80;
+    }
+
+    .goal {
+      margin-bottom: 1.5rem;
+    }
+
+    .goal-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .goal-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .goal-controls button {
+      background-color: #4ade80;
+      border: none;
+      color: #000;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .goal-controls button:hover {
+      background-color: #86efac;
+    }
+
+    .goal-progress {
+      font-size: 1.2rem;
+      font-weight: bold;
+      min-width: 40px;
+    }
+
+    .caution {
+      margin-top: 2rem;
+      color: #f87171; /* A red-ish color */
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .reset-btn {
+      margin-top: 1rem;
+      background-color: #3b82f6;
+      color: #fff;
+    }
+
+    .reset-btn:hover {
+      background-color: #60a5fa;
+    }
+  </style>
 </head>
 <body>
+  <div class="quest-container">
+    <h1>Quest Info</h1>
+    <h2>Daily Quest - Train to become a formidable combatant</h2>
 
-  <div class="container">
-    <!-- Header Section -->
-    <header>
-      <h1>Daily Quest</h1>
-      <p class="subtitle">Train to Become a Formidable Combatant</p>
-    </header>
-
-    <!-- Quest Info Section -->
-    <section class="quest-info">
-      <h2>Goals</h2>
-      <div class="quest">
-        <label for="pushUps">Push-Ups</label>
-        <div class="progress">
-          <input type="number" id="pushUps" value="0" min="0" max="100" />
-          <span>/100</span>
-        </div>
+    <!-- Push-ups -->
+    <div class="goal" id="pushupGoal">
+      <div class="goal-title">Push-ups</div>
+      <div class="goal-controls">
+        <button onclick="updateGoal('pushups', -1, 100)">-</button>
+        <div class="goal-progress" id="pushupsDisplay">0 / 100</div>
+        <button onclick="updateGoal('pushups', 1, 100)">+</button>
       </div>
-      <div class="quest">
-        <label for="sitUps">Sit-Ups</label>
-        <div class="progress">
-          <input type="number" id="sitUps" value="0" min="0" max="100" />
-          <span>/100</span>
-        </div>
-      </div>
-      <div class="quest">
-        <label for="squats">Squats</label>
-        <div class="progress">
-          <input type="number" id="squats" value="0" min="0" max="100" />
-          <span>/100</span>
-        </div>
-      </div>
-      <div class="quest">
-        <label for="run">Run</label>
-        <div class="progress">
-          <input type="number" id="run" value="0" min="0" max="10" />
-          <span>/10 km</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Caution Section -->
-    <p id="caution" class="caution">
-      CAUTION! If the daily quest remains incomplete, penalties will be given accordingly.
-    </p>
-
-    <!-- Buttons -->
-    <div class="button-container">
-      <button id="checkProgressBtn">Check Progress</button>
-      <button id="resetBtn">Reset</button>
     </div>
+
+    <!-- Sit-ups -->
+    <div class="goal" id="situpGoal">
+      <div class="goal-title">Sit-ups</div>
+      <div class="goal-controls">
+        <button onclick="updateGoal('situps', -1, 100)">-</button>
+        <div class="goal-progress" id="situpsDisplay">0 / 100</div>
+        <button onclick="updateGoal('situps', 1, 100)">+</button>
+      </div>
+    </div>
+
+    <!-- Squats -->
+    <div class="goal" id="squatGoal">
+      <div class="goal-title">Squats</div>
+      <div class="goal-controls">
+        <button onclick="updateGoal('squats', -1, 100)">-</button>
+        <div class="goal-progress" id="squatsDisplay">0 / 100</div>
+        <button onclick="updateGoal('squats', 1, 100)">+</button>
+      </div>
+    </div>
+
+    <!-- Run (km) -->
+    <div class="goal" id="runGoal">
+      <div class="goal-title">Run</div>
+      <div class="goal-controls">
+        <button onclick="updateGoal('run', -1, 10)">-</button>
+        <div class="goal-progress" id="runDisplay">0 / 10 km</div>
+        <button onclick="updateGoal('run', 1, 10)">+</button>
+      </div>
+    </div>
+
+    <div class="caution">
+      Caution! If the daily quest remains incomplete, penalties will be given accordingly.
+    </div>
+    <button class="reset-btn" onclick="resetAll()">Reset All</button>
   </div>
 
-  <!-- External JavaScript -->
-  <script src="script.js"></script>
+  <script>
+    // Track the current counts in an object
+    const goals = {
+      pushups: 0,
+      situps: 0,
+      squats: 0,
+      run: 0
+    };
+
+    // Function to update each goal
+    function updateGoal(goalName, increment, maxVal) {
+      // Add or subtract from the goal count
+      goals[goalName] += increment;
+      // Ensure it doesn't go below 0 or above the max
+      if (goals[goalName] < 0) goals[goalName] = 0;
+      if (goals[goalName] > maxVal) goals[goalName] = maxVal;
+
+      // Update the display
+      if (goalName === 'run') {
+        document.getElementById('runDisplay').textContent = `${goals[goalName]} / 10 km`;
+      } else {
+        document.getElementById(goalName + 'Display').textContent = `${goals[goalName]} / ${maxVal}`;
+      }
+    }
+
+    // Reset all goals to zero
+    function resetAll() {
+      goals.pushups = 0;
+      goals.situps = 0;
+      goals.squats = 0;
+      goals.run = 0;
+
+      document.getElementById('pushupsDisplay').textContent = '0 / 100';
+      document.getElementById('situpsDisplay').textContent = '0 / 100';
+      document.getElementById('squatsDisplay').textContent = '0 / 100';
+      document.getElementById('runDisplay').textContent = '0 / 10 km';
+    }
+  </script>
 </body>
 </html>
