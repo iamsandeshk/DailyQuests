@@ -4,16 +4,16 @@
   <meta charset="UTF-8" />
   <title>Daily Quests - Solo Leveling</title>
   <style>
-    /* Basic Reset */
+    /* Base Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Arial', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      background: linear-gradient(135deg, #0a0a1a, #1a1a2f);
       color: #fff;
       display: flex;
       align-items: center;
@@ -23,177 +23,193 @@
     }
 
     .quest-container {
-      background-color: rgba(0, 0, 0, 0.4);
-      border: 2px solid #4ade80;
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid #3d5afe;
+      border-radius: 12px;
       padding: 2rem;
-      max-width: 400px;
       width: 100%;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      max-width: 450px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(61, 90, 254, 0.2);
     }
 
-    .quest-container h1 {
-      font-size: 1.5rem;
+    .quest-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, #3d5afe, transparent);
+      animation: glow 6s linear infinite;
+      opacity: 0.1;
+    }
+
+    h1 {
+      font-size: 1.8rem;
       margin-bottom: 0.5rem;
-      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #3d5afe;
+      text-shadow: 0 0 10px rgba(61, 90, 254, 0.5);
     }
 
-    .quest-container h2 {
+    h2 {
       font-size: 1rem;
-      font-weight: normal;
-      margin-bottom: 1.5rem;
-      color: #4ade80;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #888;
+      font-weight: 300;
     }
 
     .goal {
-      margin-bottom: 1.5rem;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .goal:hover {
+      background: rgba(61, 90, 254, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .goal.completed {
+      background: rgba(76, 222, 128, 0.1);
+      border-color: #4ade80;
     }
 
     .goal-title {
       font-weight: bold;
-      margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .goal-controls {
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 1rem;
+      color: #fff;
     }
 
-    .goal-controls button {
-      background-color: #4ade80;
-      border: none;
+    .goal-title::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 2px solid #3d5afe;
+      border-radius: 50%;
+      margin-left: auto;
+      transition: all 0.3s ease;
+    }
+
+    .goal.completed .goal-title::after {
+      background: #4ade80;
+      border-color: #4ade80;
+      content: '✓';
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #000;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .goal-controls button:hover {
-      background-color: #86efac;
-    }
-
-    .goal-progress {
-      font-size: 1.2rem;
-      font-weight: bold;
-      min-width: 40px;
+      font-size: 12px;
     }
 
     .caution {
       margin-top: 2rem;
-      color: #f87171; /* A red-ish color */
+      padding: 1rem;
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid #f87171;
+      border-radius: 8px;
+      text-align: center;
       font-size: 0.9rem;
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 1px;
+      color: #f87171;
     }
 
-    .reset-btn {
-      margin-top: 1rem;
-      background-color: #3b82f6;
-      color: #fff;
-    }
-
-    .reset-btn:hover {
-      background-color: #60a5fa;
+    @keyframes glow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
   <div class="quest-container">
-    <h1>Quest Info</h1>
-    <h2>Daily Quest - Train to become a formidable combatant</h2>
+    <h1>Daily Quests</h1>
+    <h2>Complete before midnight</h2>
 
-    <!-- Push-ups -->
-    <div class="goal" id="pushupGoal">
-      <div class="goal-title">Push-ups</div>
-      <div class="goal-controls">
-        <button onclick="updateGoal('pushups', -1, 100)">-</button>
-        <div class="goal-progress" id="pushupsDisplay">0 / 100</div>
-        <button onclick="updateGoal('pushups', 1, 100)">+</button>
-      </div>
+    <div class="goal" onclick="toggleGoal('pushups')">
+      <div class="goal-title">100 Push-ups</div>
     </div>
 
-    <!-- Sit-ups -->
-    <div class="goal" id="situpGoal">
-      <div class="goal-title">Sit-ups</div>
-      <div class="goal-controls">
-        <button onclick="updateGoal('situps', -1, 100)">-</button>
-        <div class="goal-progress" id="situpsDisplay">0 / 100</div>
-        <button onclick="updateGoal('situps', 1, 100)">+</button>
-      </div>
+    <div class="goal" onclick="toggleGoal('situps')">
+      <div class="goal-title">100 Sit-ups</div>
     </div>
 
-    <!-- Squats -->
-    <div class="goal" id="squatGoal">
-      <div class="goal-title">Squats</div>
-      <div class="goal-controls">
-        <button onclick="updateGoal('squats', -1, 100)">-</button>
-        <div class="goal-progress" id="squatsDisplay">0 / 100</div>
-        <button onclick="updateGoal('squats', 1, 100)">+</button>
-      </div>
+    <div class="goal" onclick="toggleGoal('squats')">
+      <div class="goal-title">100 Squats</div>
     </div>
 
-    <!-- Run (km) -->
-    <div class="goal" id="runGoal">
-      <div class="goal-title">Run</div>
-      <div class="goal-controls">
-        <button onclick="updateGoal('run', -1, 10)">-</button>
-        <div class="goal-progress" id="runDisplay">0 / 10 km</div>
-        <button onclick="updateGoal('run', 1, 10)">+</button>
-      </div>
+    <div class="goal" onclick="toggleGoal('run')">
+      <div class="goal-title">10km Run</div>
     </div>
 
     <div class="caution">
-      Caution! If the daily quest remains incomplete, penalties will be given accordingly.
+      ⚠️ Incomplete quests will reduce your stats!
     </div>
-    <button class="reset-btn" onclick="resetAll()">Reset All</button>
   </div>
 
   <script>
-    // Track the current counts in an object
     const goals = {
-      pushups: 0,
-      situps: 0,
-      squats: 0,
-      run: 0
+      pushups: false,
+      situps: false,
+      squats: false,
+      run: false
     };
 
-    // Function to update each goal
-    function updateGoal(goalName, increment, maxVal) {
-      // Add or subtract from the goal count
-      goals[goalName] += increment;
-      // Ensure it doesn't go below 0 or above the max
-      if (goals[goalName] < 0) goals[goalName] = 0;
-      if (goals[goalName] > maxVal) goals[goalName] = maxVal;
-
-      // Update the display
-      if (goalName === 'run') {
-        document.getElementById('runDisplay').textContent = `${goals[goalName]} / 10 km`;
-      } else {
-        document.getElementById(goalName + 'Display').textContent = `${goals[goalName]} / ${maxVal}`;
+    // Check daily reset
+    function checkDailyReset() {
+      const lastReset = localStorage.getItem('lastReset');
+      const currentDate = new Date().toDateString();
+      
+      if (!lastReset || lastReset !== currentDate) {
+        resetAll();
+        localStorage.setItem('lastReset', currentDate);
       }
     }
 
-    // Reset all goals to zero
-    function resetAll() {
-      goals.pushups = 0;
-      goals.situps = 0;
-      goals.squats = 0;
-      goals.run = 0;
-
-      document.getElementById('pushupsDisplay').textContent = '0 / 100';
-      document.getElementById('situpsDisplay').textContent = '0 / 100';
-      document.getElementById('squatsDisplay').textContent = '0 / 100';
-      document.getElementById('runDisplay').textContent = '0 / 10 km';
+    // Toggle goal completion
+    function toggleGoal(goalName) {
+      const goalElement = document.querySelector(`[onclick="toggleGoal('${goalName}')"]`);
+      goals[goalName] = !goals[goalName];
+      goalElement.classList.toggle('completed');
+      localStorage.setItem('goals', JSON.stringify(goals));
     }
+
+    // Reset all goals
+    function resetAll() {
+      document.querySelectorAll('.goal').forEach(goal => {
+        goal.classList.remove('completed');
+      });
+      Object.keys(goals).forEach(key => goals[key] = false);
+      localStorage.setItem('goals', JSON.stringify(goals));
+    }
+
+    // Load saved state
+    function loadProgress() {
+      const savedGoals = localStorage.getItem('goals');
+      if (savedGoals) {
+        Object.assign(goals, JSON.parse(savedGoals));
+        Object.keys(goals).forEach(key => {
+          if (goals[key]) {
+            document.querySelector(`[onclick="toggleGoal('${key}')"]`).classList.add('completed');
+          }
+        });
+      }
+    }
+
+    // Initialize
+    checkDailyReset();
+    loadProgress();
+    // Check for reset every minute
+    setInterval(checkDailyReset, 60000);
   </script>
 </body>
 </html>
