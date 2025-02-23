@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Quests – Solo Leveling Inspired</title>
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Section -->
+    <header>
+      <h1>Daily Quest</h1>
+      <p class="subtitle">Train to Become a Formidable Combatant</p>
+    </header>
+
+    <!-- Quest Info Section -->
+    <section class="quest-info">
+      <h2>Goals</h2>
+      <div class="quest">
+        <label for="pushUps">Push-Ups</label>
+        <div class="progress">
+          <input type="number" id="pushUps" value="0" min="0" max="100" />
+          <span>/100</span>
+        </div>
+      </div>
+      <div class="quest">
+        <label for="sitUps">Sit-Ups</label>
+        <div class="progress">
+          <input type="number" id="sitUps" value="0" min="0" max="100" />
+          <span>/100</span>
+        </div>
+      </div>
+      <div class="quest">
+        <label for="squats">Squats</label>
+        <div class="progress">
+          <input type="number" id="squats" value="0" min="0" max="100" />
+          <span>/100</span>
+        </div>
+      </div>
+      <div class="quest">
+        <label for="run">Run</label>
+        <div class="progress">
+          <input type="number" id="run" value="0" min="0" max="10" />
+          <span>/10 km</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Caution Section -->
+    <p id="caution" class="caution">
+      CAUTION! If the daily quest remains incomplete, penalties will be given accordingly.
+    </p>
+
+    <!-- Buttons -->
+    <div class="button-container">
+      <button id="checkProgressBtn">Check Progress</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
